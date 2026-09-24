@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers | Ravenshaw University ITEP</title>
+    <meta name="description" content="Meet the faculty and teachers of the Ravenshaw University ITEP program.">
+    <meta property="og:title" content="Teachers | Ravenshaw University ITEP">
+    <meta property="og:description" content="Meet the faculty and teachers of the Ravenshaw University ITEP program.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#FFFFFF">
+
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/profiles.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js">
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js">
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js">
+    <link rel="modulepreload" href="assets/js/firebase-init.js">
+    <link rel="modulepreload" href="assets/js/firebase-init.js">
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+</head>
+
+<body style="--nav-active-color: #FF6B8A;">
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <img src="assets/images/Ravenshaw_University_Logo.png" alt="Ravenshaw University" class="navbar-logo-img">
+                <span class="navbar-title">ITEP 2026-2030</span>
+            </a>
+
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <ul class="navbar-menu" id="navbar-menu">
+                <li><a href="index.html" class="navbar-link">Home</a></li>
+                <li><a href="batchmates.html" class="navbar-link">Batchmates</a></li>
+                <li><a href="teachers.html" class="navbar-link active">Teachers</a></li>
+                <li><a href="events.html" class="navbar-link">Events</a></li>
+                <li><a href="calendar.html" class="navbar-link">Calendar</a></li>
+                <li><a href="talents.html" class="navbar-link">Talents</a></li>
+                <li><a href="contact.html" class="navbar-link-btn">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header section">
+        <div class="container text-center">
+            <h1 class="page-title reveal">Our <span class="title-highlight">Teachers</span></h1>
+            <p class="page-subtitle reveal" style="transition-delay: 0.1s; max-width: 600px; margin: 1rem auto 0;">
+                Honoring the mentors who shaped our paths and fueled our ambitions with their wisdom.
+            </p>
+        </div>
+    </header>
+
+    <section class="profiles-section section" style="padding-top: 0;">
+        <div class="container">
+            <div style="position: relative; min-height: 400px;">
+                <div class="profiles-grid" id="teachers-grid">
+                    <!-- Add Card (Admin) - Hardcoded to prevent layout shift -->
+                    <div class="add-card admin-only-card animate-in" onclick="openAddTeacherModal()" style="box-shadow: none;">
+                        <div class="add-card-content">
+                            <ion-icon name="add-circle" class="add-card-icon"></ion-icon>
+                            <span class="add-card-text">Add New Teacher</span>
+                            <span class="add-card-subtext">Click to create a new profile</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profiles-grid" id="teachers-skeletons" style="position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 10; transition: opacity 0.5s ease;">
+                    <div class="add-card admin-only-card" style="box-shadow: none; visibility: hidden;"></div>
+                    <!-- Teacher Skeletons -->
+                    <div class="profile-card" style="box-shadow: none; pointer-events: none;">
+                        <div class="profile-card-inner">
+                            <div class="profile-card-front skeleton" style="background: var(--bg-secondary); border: none;">
+                                <div class="card-overlay-bottom">
+                                    <div class="profile-info-bottom" style="width: 100%;">
+                                        <div class="skeleton" style="height: 1.3rem; width: 80%; background: rgba(255,255,255,0.4); border-radius: 4px; margin-bottom: 0.4rem;"></div>
+                                        <div class="skeleton" style="height: 0.85rem; width: 60%; background: rgba(255,255,255,0.3); border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card" style="box-shadow: none; pointer-events: none;">
+                        <div class="profile-card-inner">
+                            <div class="profile-card-front skeleton" style="background: var(--bg-secondary); border: none;">
+                                <div class="card-overlay-bottom">
+                                    <div class="profile-info-bottom" style="width: 100%;">
+                                        <div class="skeleton" style="height: 1.3rem; width: 80%; background: rgba(255,255,255,0.4); border-radius: 4px; margin-bottom: 0.4rem;"></div>
+                                        <div class="skeleton" style="height: 0.85rem; width: 60%; background: rgba(255,255,255,0.3); border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card" style="box-shadow: none; pointer-events: none;">
+                        <div class="profile-card-inner">
+                            <div class="profile-card-front skeleton" style="background: var(--bg-secondary); border: none;">
+                                <div class="card-overlay-bottom">
+                                    <div class="profile-info-bottom" style="width: 100%;">
+                                        <div class="skeleton" style="height: 1.3rem; width: 80%; background: rgba(255,255,255,0.4); border-radius: 4px; margin-bottom: 0.4rem;"></div>
+                                        <div class="skeleton" style="height: 0.85rem; width: 60%; background: rgba(255,255,255,0.3); border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="no-results" style="display: none; text-align: center; width: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); flex-direction: column; justify-content: center; align-items: center; z-index: 5;">
+                    <ion-icon name="search-outline" style="font-size: 4rem; color: var(--text-secondary); margin-bottom: 1rem; opacity: 0.5;"></ion-icon>
+                    <h3 style="margin-bottom: 0.5rem; color: var(--text-primary); padding: 0 1rem;">Oops!</h3>
+                    <p style="color: var(--text-secondary); padding: 0 1rem;">No teachers found matching your search.</p>
+                </div>
+            </div>
+            
+            <div class="load-more-container" style="text-align: center; margin-top: 2rem;">
+                <button id="load-more-btn" class="btn btn-secondary" style="display: none; padding: 10px 20px; border-radius: 999px;">Load More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Teacher Modal -->
+    <div class="admin-modal-overlay" id="add-teacher-modal">
+        <div class="admin-modal">
+            <div class="admin-modal-header">
+                <h3 id="teacher-modal-title">Add New Teacher</h3>
+                <button class="btn-close" id="close-teacher-modal"><ion-icon name="close"></ion-icon></button>
+            </div>
+            <div class="admin-modal-body">
+                <div>
+                    <div id="teacher-msg" class="success-message"></div>
+                    <form id="teacher-form">
+                        <div class="form-group">
+                            <label for="teacher-name">Full Name</label>
+                            <input type="text" id="teacher-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="teacher-desc">Short Description (Role/Subject)</label>
+                            <input type="text" id="teacher-desc" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="teacher-dob">Date of Birth</label>
+                            <input type="date" id="teacher-dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="teacher-image">Image URL (Google Drive link or any direct link)</label>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: -0.2rem; margin-bottom: 0.5rem;">Note: For best results, use an image with the face positioned towards the top. Images are automatically cropped at the bottom to fit.</p>
+                            <input type="url" id="teacher-image" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="teacher-image-pos">Vertical Image Adjustment (Top to Bottom)</label>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Top</span>
+                                <input type="range" id="teacher-image-pos" min="0" max="100" value="0" style="flex: 1;">
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Bottom</span>
+                            </div>
+                            <div id="teacher-image-preview-container" style="display: none; margin-top: 1rem; text-align: center;">
+                                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Preview (How it looks on the card):</p>
+                                <div style="width: 100%; max-width: 300px; height: 350px; margin: 0 auto; border-radius: 24px; overflow: hidden; background-color: var(--bg-secondary); border: 2px solid var(--border-color); position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);">
+                                    <div id="teacher-image-preview" style="width: 100%; height: 100%; background-size: cover; background-position: center 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="admin-modal-footer">
+                <button type="submit" class="btn-primary" id="teacher-submit" form="teacher-form" style="width: 100%; max-width: 300px;">Save Teacher</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div style="line-height: 1.4; display: flex; flex-direction: column; gap: 0.3rem;"><p style="margin: 0;">ITEP BATCH 2026-2030</p><p style="margin: 0; font-size: 0.85em; opacity: 0.8;">RAVENSHAW UNIVERSITY</p></div>
+                <div id="admin-auth-container" style="margin-top: 5px;">
+                    <a href="login.html" id="admin-login-link" style="color: var(--text-secondary); font-size: 0.85rem; font-weight: 500; text-decoration: none; opacity: 0.7;">Admin Login</a>
+                    <button id="admin-logout-btn" style="display: none; background: none; border: none; color: var(--text-secondary); font-size: 0.85rem; font-weight: 500; text-decoration: underline; opacity: 0.7; cursor: pointer; padding: 0;">Admin Logout</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="assets/js/navbar.js"></script>
+    <script type="module" src="assets/js/auth.js"></script>
+    <script type="module">
+        import { db, auth, onAuthStateChanged, collection, getDocs, getDoc, orderBy, query, limit, startAfter, addDoc, doc, deleteDoc, updateDoc, escapeHTML } from './assets/js/firebase-init.js';
+
+        let editingTeacherId = null;
+        let allTeachers = [];
+        let isDataLoaded = false;
+        let lastVisibleTeacher = null;
+        const teachersPerPage = 12;
+
+        onAuthStateChanged(auth, (user) => {
+            window.isAdmin = !!user;
+            if (isDataLoaded) renderTeachers();
+        });
+
+        // Modal Logic
+        const modal = document.getElementById('add-teacher-modal');
+        document.getElementById('close-teacher-modal').addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        window.openAddTeacherModal = () => {
+            editingTeacherId = null;
+            document.getElementById('teacher-modal-title').textContent = 'Add New Teacher';
+            teacherBtn.textContent = 'Save Teacher';
+            document.getElementById('teacher-form').reset();
+            document.getElementById('teacher-image-preview-container').style.display = 'none';
+
+            modal.classList.add('active');
+            document.getElementById('teacher-msg').style.display = 'none';
+        };
+
+        const imageInput = document.getElementById('teacher-image');
+        const posInput = document.getElementById('teacher-image-pos');
+        const previewContainer = document.getElementById('teacher-image-preview-container');
+        const preview = document.getElementById('teacher-image-preview');
+
+        function updatePreview() {
+            const url = imageInput.value.trim();
+            const pos = posInput.value;
+            if (url) {
+                previewContainer.style.display = 'block';
+                preview.style.backgroundImage = `url('${formatImageUrl(url)}')`;
+                preview.style.backgroundPosition = `center ${pos}%`;
+            } else {
+                previewContainer.style.display = 'none';
+            }
+        }
+
+        imageInput.addEventListener('input', updatePreview);
+        posInput.addEventListener('input', updatePreview);
+
+        const iName = document.getElementById('teacher-name');
+        const iDesc = document.getElementById('teacher-desc');
+        const iImg = document.getElementById('teacher-image');
+
+        function formatImageUrl(url) {
+            if (url.includes('drive.google.com')) {
+                let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1000`;
+                }
+                match = url.match(/id=([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1000`;
+                }
+            }
+            return url;
+        }
+
+
+
+        // Form Submit
+        const teacherForm = document.getElementById('teacher-form');
+        const teacherBtn = document.getElementById('teacher-submit');
+        const teacherMsg = document.getElementById('teacher-msg');
+
+        teacherForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            teacherBtn.disabled = true;
+            teacherBtn.textContent = 'Saving...';
+            teacherMsg.style.display = 'none';
+
+            try {
+                let imageUrl = formatImageUrl(document.getElementById('teacher-image').value);
+                const dobVal = document.getElementById('teacher-dob').value;
+                let birthMonth = null;
+                if (dobVal) {
+                    birthMonth = parseInt(dobVal.split('-')[1], 10);
+                }
+                
+                const teacherData = {
+                    name: iName.value,
+                    description: iDesc.value,
+                    dob: dobVal,
+                    birthMonth: birthMonth,
+                    image: imageUrl,
+                    imagePos: parseInt(document.getElementById('teacher-image-pos').value) || 0
+                };
+
+                if (editingTeacherId) {
+                    await updateDoc(doc(db, "teachers", editingTeacherId), teacherData);
+                    teacherMsg.textContent = 'Teacher updated successfully!';
+                } else {
+                    teacherData.createdAt = new Date().toISOString();
+                    await addDoc(collection(db, "teachers"), teacherData);
+                    teacherMsg.textContent = 'Teacher added successfully!';
+                }
+                teacherMsg.style.display = 'block';
+                teacherForm.reset();
+                setTimeout(() => modal.classList.remove('active'), 1000);
+                fetchTeachers();
+            } catch (error) {
+                alert("Error saving teacher: " + error.message);
+            } finally {
+                teacherBtn.disabled = false;
+                teacherBtn.textContent = editingTeacherId ? 'Update Teacher' : 'Save Teacher';
+            }
+        });
+
+        // Edit Teacher Logic
+        window.editTeacher = async (id) => {
+            editingTeacherId = id;
+            document.getElementById('teacher-modal-title').textContent = 'Edit Teacher';
+            teacherBtn.textContent = 'Update Teacher';
+            
+            const docSnap = await getDoc(doc(db, "teachers", id));
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                document.getElementById('teacher-name').value = data.name || '';
+                document.getElementById('teacher-desc').value = data.description || '';
+                document.getElementById('teacher-dob').value = data.dob || '';
+                document.getElementById('teacher-image').value = data.image || '';
+                document.getElementById('teacher-image-pos').value = data.imagePos || 0;
+                
+                // Trigger live preview
+                iName.dispatchEvent(new Event('input'));
+                iDesc.dispatchEvent(new Event('input'));
+                iImg.dispatchEvent(new Event('input'));
+                
+                modal.classList.add('active');
+                document.getElementById('teacher-msg').style.display = 'none';
+            }
+        };
+
+        window.deleteTeacher = async (id) => {
+            if(await window.customConfirm("Are you sure you want to delete this teacher?")) {
+                try {
+                    await deleteDoc(doc(db, "teachers", id));
+                    fetchTeachers();
+                } catch(e) {
+                    alert("Error deleting: " + e.message);
+                }
+            }
+        };
+
+        window.shareProfile = async (name, type, description, btn) => {
+            const link = window.location.href;
+            const text = `Check out ${name}'s profile on Ravenshaw ITEP!`;
+            
+            try { navigator.clipboard.writeText(link); } catch(e) {}
+
+            if (navigator.share) {
+                try {
+                    let file = null;
+                    let canvasSuccess = false;
+                    
+                    if (btn && typeof htmlToImage !== 'undefined') {
+                        try {
+                            const card = btn.closest('.profile-card');
+                            const front = card.querySelector('.profile-card-front');
+                            const btnText = btn.innerHTML;
+                            btn.innerHTML = '<ion-icon name="hourglass-outline"></ion-icon> <span>Wait...</span>';
+                            
+                            // iOS Safari Fix: convert background image to base64 to prevent SVG security blocks
+                            const originalBg = front.style.backgroundImage;
+                            const bgMatch = originalBg.match(/url\(['"]?(.*?)['"]?\)/);
+                            if (bgMatch && bgMatch[1] && !bgMatch[1].startsWith('data:')) {
+                                try {
+                                    const res = await fetch(bgMatch[1], { mode: 'cors', cache: 'force-cache' });
+                                    const b = await res.blob();
+                                    const base64Url = await new Promise(r => {
+                                        const reader = new FileReader();
+                                        reader.onloadend = () => r(reader.result);
+                                        reader.readAsDataURL(b);
+                                    });
+                                    front.style.backgroundImage = `url(${base64Url})`;
+                                } catch (e) {
+                                    console.warn("Base64 conversion failed", e);
+                                }
+                            }
+                            
+                            // Workaround for Safari/iOS white image issue: 
+                            // 1. Multiple calls
+                            // 2. Explicit dimensions
+                            // 3. Skip fonts (often blocks WebKit SVG rendering)
+                            const config = { 
+                                pixelRatio: 2, 
+                                cacheBust: true, 
+                                useCORS: true,
+                                skipFonts: true,
+                                width: front.offsetWidth,
+                                height: front.offsetHeight
+                            };
+                            await htmlToImage.toPng(front, config);
+                            const blob = await htmlToImage.toBlob(front, config);
+                            
+                            // Restore original background
+                            front.style.backgroundImage = originalBg;
+                            
+                            file = new File([blob], 'profile.png', { type: 'image/png' });
+                            canvasSuccess = true;
+                            
+                            btn.innerHTML = btnText;
+                        } catch (e) {
+                            console.error("Image capture failed", e);
+                        }
+                    }
+                    
+                    if (!canvasSuccess) {
+                        const response = await fetch('assets/images/Ravenshaw_University_Logo.png');
+                        const blob = await response.blob();
+                        file = new File([blob], 'logo.png', { type: blob.type });
+                    }
+                    
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        // Show non-blocking toast so user knows to paste link
+                        const toast = document.createElement('div');
+                        toast.textContent = "Link copied! Paste it as a sticker in Instagram Story.";
+                        toast.style.cssText = "position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);color:#fff;padding:10px 16px;border-radius:24px;z-index:9999;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,0.3);animation: fadeInOut 4s forwards;width:max-content;max-width:90vw;text-align:center;";
+                        if (!document.querySelector('#toast-style')) {
+                            const style = document.createElement('style');
+                            style.id = 'toast-style';
+                            style.textContent = "@keyframes fadeInOut { 0% { opacity: 0; bottom: 10px; } 10% { opacity: 1; bottom: 20px; } 90% { opacity: 1; bottom: 20px; } 100% { opacity: 0; bottom: 10px; } }";
+                            document.head.appendChild(style);
+                        }
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.remove(), 4000);
+
+                        await navigator.share({
+                            title: 'Ravenshaw Teacher',
+                            text: text,
+                            url: link,
+                            files: [file]
+                        });
+                    } else {
+                        await navigator.share({ title: 'Ravenshaw Teacher', text: text, url: link });
+                    }
+                } catch (err) {
+                    if (err.name !== 'AbortError') alert("Link copied to clipboard! You can paste it in your Instagram Story link sticker.");
+                }
+            } else {
+                alert("Link copied to clipboard! You can paste it in your Instagram Story link sticker.");
+            }
+        };
+
+        async function fetchTeachers(loadMore = false) {
+            const grid = document.getElementById('teachers-grid');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            try {
+                let constraints = [orderBy("createdAt", "asc"), limit(teachersPerPage)];
+                if (loadMore && lastVisibleTeacher) {
+                    constraints.push(startAfter(lastVisibleTeacher));
+                }
+                
+                const q = query(collection(db, "teachers"), ...constraints);
+                const querySnapshot = await getDocs(q);
+                
+                if (!loadMore) allTeachers = [];
+                
+                querySnapshot.forEach((docSnap) => {
+                    allTeachers.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                
+                lastVisibleTeacher = querySnapshot.docs[querySnapshot.docs.length - 1];
+                
+                if (querySnapshot.docs.length < teachersPerPage) {
+                    loadMoreBtn.style.display = 'none';
+                } else {
+                    loadMoreBtn.style.display = 'inline-block';
+                }
+
+                isDataLoaded = true;
+                renderTeachers();
+            } catch (error) {
+                console.error("Error fetching teachers:", error);
+                if(!loadMore) {
+                    allTeachers = [];
+                    isDataLoaded = true;
+                    renderTeachers();
+                }
+            }
+        }
+        
+        document.getElementById('load-more-btn').addEventListener('click', () => fetchTeachers(true));
+
+        function renderTeachers(teachers) {
+            teachers = teachers || allTeachers;
+            const grid = document.getElementById('teachers-grid');
+            grid.innerHTML = ''; 
+
+            if (window.isAdmin) {
+                grid.innerHTML += `
+                    <div class="add-card" onclick="openAddTeacherModal()">
+                        <div class="add-card-content">
+                            <ion-icon name="add-circle" class="add-card-icon"></ion-icon>
+                            <span class="add-card-text">Add New Teacher</span>
+                            <span class="add-card-subtext">Click to create a new profile</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const skeletons = document.getElementById('teachers-skeletons');
+            if (skeletons && skeletons.style.display !== 'none') {
+                setTimeout(() => {
+                    skeletons.style.opacity = '0';
+                    setTimeout(() => {
+                        if (skeletons) skeletons.style.display = 'none';
+                    }, 500);
+                }, 100);
+            }
+
+            if (teachers.length === 0 && !window.isAdmin) {
+                document.getElementById('no-results').style.display = 'flex';
+                if (skeletons) {
+                    skeletons.style.opacity = '0';
+                    setTimeout(() => {
+                        if (skeletons) skeletons.style.display = 'none';
+                    }, 500);
+                }
+                return;
+            } else {
+                document.getElementById('no-results').style.display = 'none';
+            }
+
+            teachers.forEach((data, index) => {
+                const card = document.createElement('div');
+                card.className = 'profile-card animate-in';
+                card.style.position = 'relative'; 
+                card.onclick = function() { this.classList.toggle('flipped'); };
+                
+                let deleteBtn = window.isAdmin ? `<button class="btn-delete-inline" onclick="deleteTeacher('${data.id}')"><ion-icon name="trash"></ion-icon></button>` : '';
+
+                // Set background color alternating or standard
+                let bgColor = '#FEE0DF';
+
+                card.innerHTML = `
+                    <div class="profile-card-inner">
+                        <div class="profile-card-front" style="background-image: url('${escapeHTML(data.image || 'assets/images/placeholder.jpg')}'); background-position: center ${escapeHTML(data.imagePos || 0)}%;">
+                            <div class="card-overlay-bottom">
+                                <div class="profile-info-bottom" style="width: 100%; max-width: 100%;">
+                                    <h3 class="profile-name-bottom">${escapeHTML(data.name)}</h3>
+                                    <p class="profile-role-bottom">${escapeHTML(data.description || 'Teacher')}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-card-back">
+                            
+                            ${window.isAdmin ? `
+                            <button class="card-back-btn btn-edit-new" onclick="event.stopPropagation(); editTeacher('${escapeHTML(data.id)}')">
+                                <ion-icon name="create-outline"></ion-icon> <span>Edit</span>
+                            </button>
+                            ` : ''}
+
+                            <button class="card-back-btn btn-share-new" onclick="event.stopPropagation(); shareProfile('${escapeHTML(data.name)}', 'Teacher', '${escapeHTML(data.description)}', this)">
+                                <ion-icon name="share-social-outline"></ion-icon> <span>Share</span>
+                            </button>
+                            
+                            ${window.isAdmin ? `
+                            <button class="card-back-btn btn-delete-new" onclick="event.stopPropagation(); deleteTeacher('${escapeHTML(data.id)}')">
+                                <ion-icon name="trash-outline"></ion-icon> <span>Delete</span>
+                            </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => fetchTeachers(false));
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .scale-in, .reveal-up');
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
