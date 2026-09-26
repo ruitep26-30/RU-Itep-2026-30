@@ -330,3 +330,94 @@ html:not(.is-admin) .admin-only-card {
         padding: 1.5rem;
     }
 }
+
+/* Multi-step Form Styles */
+.form-steps-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.step-dot {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0.5;
+    transition: all 0.3s;
+}
+.step-dot.active {
+    opacity: 1;
+    color: var(--text-primary);
+}
+.step-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+}
+.step-dot.active .step-number {
+    background: var(--text-primary);
+    color: white;
+}
+.form-step {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+.form-step.active {
+    display: block;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom File Upload */
+.custom-file-upload {
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 2rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--bg-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.custom-file-upload:hover {
+    border-color: var(--nav-active-color);
+    background: rgba(0, 0, 0, 0.02);
+}
+.custom-file-upload ion-icon {
+    font-size: 3rem;
+    color: var(--text-secondary);
+}
+.custom-file-upload span {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+.custom-file-upload p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+.modal-footer-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}/ *  
+ F i l e  
+ U p l o a d  
+ C u s t o m  
+ S t y l e s  
+ * /  
+ 

@@ -134,10 +134,16 @@
                 <h3 id="teacher-modal-title">Add New Teacher</h3>
                 <button class="btn-close" id="close-teacher-modal"><ion-icon name="close"></ion-icon></button>
             </div>
+            <div class="form-steps-indicator">
+                <div class="step-dot active" id="teacher-step-1-dot"><div class="step-number">1</div> Details</div>
+                <div style="width: 40px; height: 2px; background: var(--border-color); margin-top: 11px;"></div>
+                <div class="step-dot" id="teacher-step-2-dot"><div class="step-number">2</div> Photo</div>
+            </div>
             <div class="admin-modal-body">
                 <div>
                     <div id="teacher-msg" class="success-message"></div>
                     <form id="teacher-form">
+                        <div id="teacher-step-1" class="form-step active">
                         <div class="form-group">
                             <label for="teacher-name">Full Name</label>
                             <input type="text" id="teacher-name" required>
@@ -150,31 +156,69 @@
                             <label for="teacher-dob">Date of Birth</label>
                             <input type="date" id="teacher-dob" required>
                         </div>
-                        <div class="form-group">
-                            <label for="teacher-image">Image URL (Google Drive link or any direct link)</label>
-                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: -0.2rem; margin-bottom: 0.5rem;">Note: For best results, use an image with the face positioned towards the top. Images are automatically cropped at the bottom to fit.</p>
-                            <input type="url" id="teacher-image" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="teacher-image-pos">Vertical Image Adjustment (Top to Bottom)</label>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Top</span>
-                                <input type="range" id="teacher-image-pos" min="0" max="100" value="0" style="flex: 1;">
-                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Bottom</span>
-                            </div>
-                            <div id="teacher-image-preview-container" style="display: none; margin-top: 1rem; text-align: center;">
-                                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Preview (How it looks on the card):</p>
-                                <div style="width: 100%; max-width: 300px; height: 350px; margin: 0 auto; border-radius: 24px; overflow: hidden; background-color: var(--bg-secondary); border: 2px solid var(--border-color); position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);">
-                                    <div id="teacher-image-preview" style="width: 100%; height: 100%; background-size: cover; background-position: center 0%;"></div>
+                        </div> <!-- End Step 1 -->
+
+                        <div id="teacher-step-2" class="form-step">
+                            <div class="form-group">
+                                <label>Upload Profile Photo</label>
+                                <label for="teacher-image-file" class="custom-file-upload">
+                                    <ion-icon name="cloud-upload-outline"></ion-icon>
+                                    <span>Click to upload image</span>
+                                    <p>JPEG, PNG, JPG</p>
+                                </label>
+                                <input type="file" id="teacher-image-file" accept="image/*" style="display: none;">
+                                
+                                <div id="teacher-upload-progress-container" style="display: none; margin-top: 15px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-primary);">Uploading...</span>
+                                        <span id="teacher-upload-percent" style="font-size: 0.8rem; font-weight: 600; color: var(--nav-active-color);">0%</span>
+                                    </div>
+                                    <div style="width: 100%; background-color: var(--bg-secondary); border-radius: 99px; overflow: hidden; height: 8px;">
+                                        <div id="teacher-upload-progress-bar" style="height: 100%; width: 0%; background-color: var(--nav-active-color); transition: width 0.3s; border-radius: 99px;"></div>
+                                    </div>
+                                    <p id="teacher-upload-status" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; text-align: center;"></p>
                                 </div>
                             </div>
-                        </div>
+                            
+                            <div class="form-group">
+                                <label for="teacher-image-pos">Vertical Image Adjustment (Top to Bottom)</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Top</span>
+                                    <input type="range" id="teacher-image-pos" min="0" max="100" value="0" style="flex: 1;">
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Bottom</span>
+                                </div>
+                                <div id="teacher-image-preview-container" style="display: none; margin-top: 1.5rem; text-align: center;">
+                                    <p style="font-size: 0.85rem; font-weight: 500; color: var(--text-primary); margin-bottom: 0.8rem;">Profile Card Preview</p>
+                                    <div style="width: 100%; max-width: 260px; height: 320px; margin: 0 auto; border-radius: 20px; overflow: hidden; background-color: var(--bg-secondary); border: 2px solid var(--border-color); position: relative; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);">
+                                        <div id="teacher-image-preview" style="width: 100%; height: 100%; background-size: cover; background-position: center 0%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                <div style="height: 1px; background: var(--border-color); flex: 1;"></div>
+                                <span style="color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">OR USE URL</span>
+                                <div style="height: 1px; background: var(--border-color); flex: 1;"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="teacher-image">Direct Image URL</label>
+                                <input type="url" id="teacher-image" placeholder="https://...">
+                            </div>
+                        </div> <!-- End Step 2 -->
                     </form>
                 </div>
 
             </div>
             <div class="admin-modal-footer">
-                <button type="submit" class="btn-primary" id="teacher-submit" form="teacher-form" style="width: 100%; max-width: 300px;">Save Teacher</button>
+                <div class="modal-footer-nav" id="teacher-footer-nav-1">
+                    <button type="button" class="btn-secondary" id="teacher-cancel-btn" style="background: var(--bg-secondary); color: var(--text-primary); border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 500;">Cancel</button>
+                    <button type="button" class="btn-primary" id="teacher-next-btn" style="width: auto; padding: 12px 32px; border-radius: 8px;">Next Step <ion-icon name="arrow-forward-outline" style="vertical-align: middle; margin-left: 5px;"></ion-icon></button>
+                </div>
+                <div class="modal-footer-nav" id="teacher-footer-nav-2" style="display: none;">
+                    <button type="button" class="btn-secondary" id="teacher-back-btn" style="background: var(--bg-secondary); color: var(--text-primary); border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 500;"><ion-icon name="arrow-back-outline" style="vertical-align: middle; margin-right: 5px;"></ion-icon> Back</button>
+                    <button type="submit" class="btn-primary" id="teacher-submit" form="teacher-form" style="width: auto; padding: 12px 32px; border-radius: 8px; background: #000; border-color: #000; color: #fff;">Save Teacher</button>
+                </div>
             </div>
         </div>
     </div>
@@ -209,11 +253,85 @@
             if (isDataLoaded) renderTeachers();
         });
 
-        // Modal Logic
+        // Cloudinary config
+        const CLOUDINARY_CLOUD_NAME = 'n2rjz8lc';
+        const CLOUDINARY_UPLOAD_PRESET = 'website_uploads';
+
+        // Modal & Multi-step Logic
         const modal = document.getElementById('add-teacher-modal');
-        document.getElementById('close-teacher-modal').addEventListener('click', () => {
+        
+        function loadDraft() {
+            if(!editingTeacherId) {
+                const draft = localStorage.getItem('teacherFormDraft');
+                if(draft) {
+                    try {
+                        const data = JSON.parse(draft);
+                        document.getElementById('teacher-name').value = data.name || '';
+                        document.getElementById('teacher-desc').value = data.description || '';
+                        document.getElementById('teacher-dob').value = data.dob || '';
+                        document.getElementById('teacher-image').value = data.image || '';
+                        if(data.image) updatePreview();
+                    } catch(e) {}
+                }
+            }
+        }
+        
+        function saveDraft() {
+            if(!editingTeacherId) {
+                const data = {
+                    name: document.getElementById('teacher-name').value,
+                    description: document.getElementById('teacher-desc').value,
+                    dob: document.getElementById('teacher-dob').value,
+                    image: document.getElementById('teacher-image').value
+                };
+                localStorage.setItem('teacherFormDraft', JSON.stringify(data));
+            }
+        }
+        
+        document.getElementById('teacher-form').addEventListener('input', saveDraft);
+        
+        function closeModal() {
             modal.classList.remove('active');
-        });
+        }
+
+        document.getElementById('close-teacher-modal').addEventListener('click', closeModal);
+        document.getElementById('teacher-cancel-btn').addEventListener('click', closeModal);
+
+        const step1 = document.getElementById('teacher-step-1');
+        const step2 = document.getElementById('teacher-step-2');
+        const dot1 = document.getElementById('teacher-step-1-dot');
+        const dot2 = document.getElementById('teacher-step-2-dot');
+        const nav1 = document.getElementById('teacher-footer-nav-1');
+        const nav2 = document.getElementById('teacher-footer-nav-2');
+
+        function showStep(step) {
+            if(step === 1) {
+                step1.classList.add('active');
+                step2.classList.remove('active');
+                dot1.classList.add('active');
+                dot2.classList.remove('active');
+                nav1.style.display = 'flex';
+                nav2.style.display = 'none';
+            } else {
+                // Validate step 1
+                const name = document.getElementById('teacher-name');
+                const desc = document.getElementById('teacher-desc');
+                const dob = document.getElementById('teacher-dob');
+                if(!name.checkValidity()) return name.reportValidity();
+                if(!desc.checkValidity()) return desc.reportValidity();
+                if(!dob.checkValidity()) return dob.reportValidity();
+                
+                step1.classList.remove('active');
+                step2.classList.add('active');
+                dot1.classList.remove('active');
+                dot2.classList.add('active');
+                nav1.style.display = 'none';
+                nav2.style.display = 'flex';
+            }
+        }
+
+        document.getElementById('teacher-next-btn').addEventListener('click', () => showStep(2));
+        document.getElementById('teacher-back-btn').addEventListener('click', () => showStep(1));
 
         window.openAddTeacherModal = () => {
             editingTeacherId = null;
@@ -221,6 +339,10 @@
             teacherBtn.textContent = 'Save Teacher';
             document.getElementById('teacher-form').reset();
             document.getElementById('teacher-image-preview-container').style.display = 'none';
+            document.getElementById('teacher-upload-progress-container').style.display = 'none';
+            
+            showStep(1);
+            loadDraft();
 
             modal.classList.add('active');
             document.getElementById('teacher-msg').style.display = 'none';
@@ -245,6 +367,73 @@
 
         imageInput.addEventListener('input', updatePreview);
         posInput.addEventListener('input', updatePreview);
+
+        // Image Upload Logic
+        const imageFileInput = document.getElementById('teacher-image-file');
+        const uploadProgressContainer = document.getElementById('teacher-upload-progress-container');
+        const uploadProgressBar = document.getElementById('teacher-upload-progress-bar');
+        const uploadStatus = document.getElementById('teacher-upload-status');
+        const uploadPercent = document.getElementById('teacher-upload-percent');
+
+        imageFileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME' || CLOUDINARY_UPLOAD_PRESET === 'YOUR_UPLOAD_PRESET') {
+                alert('Cloudinary is not configured. Please add your Cloud Name and Upload Preset in the code.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+            uploadProgressContainer.style.display = 'block';
+            uploadProgressBar.style.width = '0%';
+            uploadStatus.textContent = 'Uploading...';
+            uploadStatus.style.color = 'var(--text-secondary)';
+            imageInput.disabled = true;
+
+            try {
+                // Using XMLHttpRequest for upload progress
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`);
+
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percentComplete = Math.round((event.loaded / event.total) * 100);
+                        uploadProgressBar.style.width = percentComplete + '%';
+                        if(uploadPercent) uploadPercent.textContent = percentComplete + '%';
+                    }
+                };
+
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        imageInput.value = response.secure_url;
+                        updatePreview();
+                        uploadStatus.textContent = 'Upload successful!';
+                        uploadStatus.style.color = '#10B981'; // Green
+                    } else {
+                        throw new Error('Upload failed');
+                    }
+                    imageInput.disabled = false;
+                };
+
+                xhr.onerror = () => {
+                    throw new Error('Network error');
+                    imageInput.disabled = false;
+                };
+
+                xhr.send(formData);
+
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                uploadStatus.textContent = 'Upload failed. Try again.';
+                uploadStatus.style.color = '#EF4444'; // Red
+                imageInput.disabled = false;
+            }
+        });
 
         const iName = document.getElementById('teacher-name');
         const iDesc = document.getElementById('teacher-desc');
@@ -302,9 +491,14 @@
                     await addDoc(collection(db, "teachers"), teacherData);
                     teacherMsg.textContent = 'Teacher added successfully!';
                 }
+                
                 teacherMsg.style.display = 'block';
-                teacherForm.reset();
-                setTimeout(() => modal.classList.remove('active'), 1000);
+                localStorage.removeItem('teacherFormDraft');
+                setTimeout(() => {
+                    modal.classList.remove('active');
+                    setTimeout(() => teacherForm.reset(), 300); // wait for fade out
+                }, 1000);
+                
                 fetchTeachers();
             } catch (error) {
                 alert("Error saving teacher: " + error.message);
