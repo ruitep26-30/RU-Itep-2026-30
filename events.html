@@ -155,39 +155,82 @@
     <div class="admin-modal-overlay" id="add-event-modal">
         <div class="admin-modal">
             <div class="admin-modal-header">
-                <h3>Add New Event</h3>
+                <h3 id="event-modal-title">Add New Event</h3>
                 <button class="btn-close" id="close-event-modal"><ion-icon name="close"></ion-icon></button>
+            </div>
+            <div class="form-steps-indicator">
+                <div class="step-dot active" id="event-step-1-dot"><div class="step-number">1</div> Details</div>
+                <div style="width: 40px; height: 2px; background: var(--border-color); margin-top: 11px;"></div>
+                <div class="step-dot" id="event-step-2-dot"><div class="step-number">2</div> Photo</div>
             </div>
             <div class="admin-modal-body">
                 <div>
                     <div id="event-msg" class="success-message"></div>
                     <form id="event-form">
-                        <div class="form-group">
-                            <label for="event-title">Event Title</label>
-                            <input type="text" id="event-title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-date">Date</label>
-                            <input type="date" id="event-date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-desc">Event Description</label>
-                            <textarea id="event-desc" rows="3" placeholder="What's happening.?"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-image">Cover Image URL</label>
-                            <input type="url" id="event-image" required>
-                            <div id="event-image-preview-container" style="margin-top: 1rem; display: none; text-align: center; border-radius: 8px; overflow: hidden; background: var(--bg-secondary); border: 1px solid var(--border-color);">
-                                <img id="event-image-preview" src="" alt="Preview" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+                        <div id="event-step-1" class="form-step active">
+                            <div class="form-group">
+                                <label for="event-title">Event Title</label>
+                                <input type="text" id="event-title" required>
                             </div>
-                        </div>
-                        <!-- Removed Album Folder Link -->
+                            <div class="form-group">
+                                <label for="event-date">Date</label>
+                                <input type="date" id="event-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-desc">Event Description</label>
+                                <textarea id="event-desc" rows="3" placeholder="What's happening.?"></textarea>
+                            </div>
+                        </div> <!-- End step 1 -->
+
+                        <div id="event-step-2" class="form-step">
+                            <div class="form-group">
+                                <label>Upload Cover Photo</label>
+                                <label for="event-image-file" class="custom-file-upload">
+                                    <ion-icon name="cloud-upload-outline"></ion-icon>
+                                    <span>Click to upload image</span>
+                                    <p>JPEG, PNG, JPG</p>
+                                </label>
+                                <input type="file" id="event-image-file" accept="image/*" style="display: none;">
+                                
+                                <div id="event-upload-progress-container" style="display: none; margin-top: 15px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-primary);">Uploading...</span>
+                                        <span id="event-upload-percent" style="font-size: 0.8rem; font-weight: 600; color: var(--nav-active-color);">0%</span>
+                                    </div>
+                                    <div style="width: 100%; background-color: var(--bg-secondary); border-radius: 99px; overflow: hidden; height: 8px;">
+                                        <div id="event-upload-progress-bar" style="height: 100%; width: 0%; background-color: var(--nav-active-color); transition: width 0.3s; border-radius: 99px;"></div>
+                                    </div>
+                                    <p id="event-upload-status" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; text-align: center;"></p>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                <div style="height: 1px; background: var(--border-color); flex: 1;"></div>
+                                <span style="color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">OR USE URL</span>
+                                <div style="height: 1px; background: var(--border-color); flex: 1;"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="event-image">Direct Image URL</label>
+                                <input type="url" id="event-image" placeholder="https://...">
+                                <div id="event-image-preview-container" style="margin-top: 1.5rem; display: none; text-align: center; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); border: 1px solid var(--border-color);">
+                                    <img id="event-image-preview" src="" alt="Preview" style="max-width: 100%; height: auto; display: block; margin: 0 auto; max-height: 250px; object-fit: cover;">
+                                </div>
+                            </div>
+                        </div> <!-- End Step 2 -->
                     </form>
                 </div>
 
             </div>
             <div class="admin-modal-footer">
-                <button type="submit" class="btn-primary" id="event-submit" form="event-form" style="width: 100%; max-width: 300px;">Save Event</button>
+                <div class="modal-footer-nav" id="event-footer-nav-1">
+                    <button type="button" class="btn-secondary" id="event-cancel-btn" style="background: var(--bg-secondary); color: var(--text-primary); border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 500;">Cancel</button>
+                    <button type="button" class="btn-primary" id="event-next-btn" style="width: auto; padding: 12px 32px; border-radius: 8px;">Next Step <ion-icon name="arrow-forward-outline" style="vertical-align: middle; margin-left: 5px;"></ion-icon></button>
+                </div>
+                <div class="modal-footer-nav" id="event-footer-nav-2" style="display: none;">
+                    <button type="button" class="btn-secondary" id="event-back-btn" style="background: var(--bg-secondary); color: var(--text-primary); border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 500;"><ion-icon name="arrow-back-outline" style="vertical-align: middle; margin-right: 5px;"></ion-icon> Back</button>
+                    <button type="submit" class="btn-primary" id="event-submit" form="event-form" style="width: auto; padding: 12px 32px; border-radius: 8px; background: #000; border-color: #000; color: #fff;">Save Event</button>
+                </div>
             </div>
         </div>
     </div>
@@ -288,16 +331,90 @@
             if (isDataLoaded) renderEventsPage();
         });
 
-        // Modal Logic
+        // Modal & Multi-step Logic
         const modal = document.getElementById('add-event-modal');
-        document.getElementById('close-event-modal').addEventListener('click', () => {
+        const CLOUDINARY_CLOUD_NAME = 'n2rjz8lc';
+        const CLOUDINARY_UPLOAD_PRESET = 'website_uploads';
+        
+        function loadDraft() {
+            if(!editingEventId) {
+                const draft = localStorage.getItem('eventFormDraft');
+                if(draft) {
+                    try {
+                        const data = JSON.parse(draft);
+                        document.getElementById('event-title').value = data.title || '';
+                        document.getElementById('event-date').value = data.date || '';
+                        document.getElementById('event-desc').value = data.desc || '';
+                        document.getElementById('event-image').value = data.image || '';
+                        if(data.image) document.getElementById('event-image').dispatchEvent(new Event('input'));
+                    } catch(e) {}
+                }
+            }
+        }
+        
+        function saveDraft() {
+            if(!editingEventId) {
+                const data = {
+                    title: document.getElementById('event-title').value,
+                    date: document.getElementById('event-date').value,
+                    desc: document.getElementById('event-desc').value,
+                    image: document.getElementById('event-image').value
+                };
+                localStorage.setItem('eventFormDraft', JSON.stringify(data));
+            }
+        }
+        
+        document.getElementById('event-form').addEventListener('input', saveDraft);
+        
+        function closeModal() {
             modal.classList.remove('active');
-        });
+        }
+
+        document.getElementById('close-event-modal').addEventListener('click', closeModal);
+        document.getElementById('event-cancel-btn').addEventListener('click', closeModal);
+
+        const step1 = document.getElementById('event-step-1');
+        const step2 = document.getElementById('event-step-2');
+        const dot1 = document.getElementById('event-step-1-dot');
+        const dot2 = document.getElementById('event-step-2-dot');
+        const nav1 = document.getElementById('event-footer-nav-1');
+        const nav2 = document.getElementById('event-footer-nav-2');
+
+        function showStep(step) {
+            if(step === 1) {
+                step1.classList.add('active');
+                step2.classList.remove('active');
+                dot1.classList.add('active');
+                dot2.classList.remove('active');
+                nav1.style.display = 'flex';
+                nav2.style.display = 'none';
+            } else {
+                // Validate step 1
+                const title = document.getElementById('event-title');
+                const date = document.getElementById('event-date');
+                if(!title.checkValidity()) return title.reportValidity();
+                if(!date.checkValidity()) return date.reportValidity();
+                
+                step1.classList.remove('active');
+                step2.classList.add('active');
+                dot1.classList.remove('active');
+                dot2.classList.add('active');
+                nav1.style.display = 'none';
+                nav2.style.display = 'flex';
+            }
+        }
+
+        document.getElementById('event-next-btn').addEventListener('click', () => showStep(2));
+        document.getElementById('event-back-btn').addEventListener('click', () => showStep(1));
 
         let editingEventId = null;
         window.openAddEventModal = (editId = null) => {
             editingEventId = typeof editId === 'string' ? editId : null;
             document.getElementById('event-msg').style.display = 'none';
+            document.getElementById('event-image-preview-container').style.display = 'none';
+            document.getElementById('event-upload-progress-container').style.display = 'none';
+            document.getElementById('event-form').reset();
+            
             if (editingEventId) {
                 const eventData = allEventsList.find(e => e.id === editingEventId);
                 if (eventData) {
@@ -306,13 +423,14 @@
                     document.getElementById('event-desc').value = eventData.description || '';
                     document.getElementById('event-image').value = eventData.image || '';
                     document.getElementById('event-image').dispatchEvent(new Event('input'));
-                    document.querySelector('#add-event-modal h3').textContent = 'Edit Event';
+                    document.getElementById('event-modal-title').textContent = 'Edit Event';
                 }
             } else {
-                eventForm.reset();
-                document.getElementById('event-image-preview-container').style.display = 'none';
-                document.querySelector('#add-event-modal h3').textContent = 'Add New Event';
+                document.getElementById('event-modal-title').textContent = 'Add New Event';
+                loadDraft();
             }
+            
+            showStep(1);
             modal.classList.add('active');
         };
 
@@ -350,6 +468,65 @@
                 previewContainer.style.display = 'none';
             }
         });
+        
+        // Image Upload Logic
+        const eventImageFileInput = document.getElementById('event-image-file');
+        const eventUploadProgressContainer = document.getElementById('event-upload-progress-container');
+        const eventUploadProgressBar = document.getElementById('event-upload-progress-bar');
+        const eventUploadStatus = document.getElementById('event-upload-status');
+        const eventUploadPercent = document.getElementById('event-upload-percent');
+
+        eventImageFileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            eventUploadProgressContainer.style.display = 'block';
+            eventUploadProgressBar.style.width = '0%';
+            if(eventUploadPercent) eventUploadPercent.textContent = '0%';
+            eventUploadStatus.textContent = 'Uploading...';
+            eventUploadStatus.style.color = 'var(--text-secondary)';
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+
+            try {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, true);
+
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percentComplete = Math.round((event.loaded / event.total) * 100);
+                        eventUploadProgressBar.style.width = percentComplete + '%';
+                        if(eventUploadPercent) eventUploadPercent.textContent = percentComplete + '%';
+                    }
+                };
+
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        eventImageInput.value = response.secure_url;
+                        eventImageInput.dispatchEvent(new Event('input'));
+                        eventUploadStatus.textContent = 'Upload successful!';
+                        eventUploadStatus.style.color = '#059669';
+                    } else {
+                        eventUploadStatus.textContent = 'Upload failed.';
+                        eventUploadStatus.style.color = '#dc3545';
+                    }
+                };
+
+                xhr.onerror = () => {
+                    eventUploadStatus.textContent = 'Error during upload.';
+                    eventUploadStatus.style.color = '#dc3545';
+                };
+
+                xhr.send(formData);
+            } catch (error) {
+                eventUploadStatus.textContent = 'Error: ' + error.message;
+                eventUploadStatus.style.color = '#dc3545';
+            }
+        });
 
         eventForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -375,10 +552,18 @@
                     await addDoc(collection(db, "events"), eventData);
                     eventMsg.textContent = 'Event added successfully!';
                 }
+                
                 eventMsg.style.display = 'block';
-                eventForm.reset();
-                previewContainer.style.display = 'none';
-                setTimeout(() => modal.classList.remove('active'), 1000);
+                localStorage.removeItem('eventFormDraft');
+                
+                setTimeout(() => {
+                    modal.classList.remove('active');
+                    setTimeout(() => {
+                        eventForm.reset();
+                        previewContainer.style.display = 'none';
+                    }, 300);
+                }, 1000);
+                
                 fetchEvents();
             } catch (error) {
                 alert("Error adding document: " + error.message);
